@@ -7,9 +7,11 @@ interface Props {
 
 const VideoItem = ({ video }: Props) => {
   return (
-    <div>
-      <h1>{video.title}</h1>
-      <p>{video.description}</p>
+    <div className="col-md-4">
+      <div className="card card-body">
+        <h1>{video.title}</h1>
+        <p>{video.description}</p>
+      </div>
     </div>
   );
 };

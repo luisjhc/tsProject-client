@@ -17,7 +17,7 @@ const VideoList = () => {
   }, []);
 
   return (
-    <div>
+    <div className="row">
       {videos.map((video, index) => {
         return <VideoItem video={video} />;
       })}
