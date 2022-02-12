@@ -8,8 +8,17 @@ const VideoList = () => {
 
   const loadVideos = async () => {
     const res = await videoService.getAllVideos();
-    setVideos(res.data);
-    console.log(res.data);
+
+    const formatedVideos = res.data
+      .map((video) => {
+        return {
+          ...video,
+          createdAt: video.createdAt ? new Date(video.createdAt) : new Date(),
+          updatedAt: video.updatedAt ? new Date(video.updatedAt) : new Date(),
+        };
+      })
+      .sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime());
+    setVideos(formatedVideos);
   };
 
   useEffect(() => {
@@ -18,8 +27,10 @@ const VideoList = () => {
 
   return (
     <div className="row">
-      {videos.map((video, index) => {
-        return <VideoItem video={video} />;
+      {videos.map((video) => {
+        return (
+          <VideoItem video={video} key={video._id} loadVideos={loadVideos} />
+        );
       })}
     </div>
   );

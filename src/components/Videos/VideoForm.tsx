@@ -1,13 +1,14 @@
-import React, { ChangeEvent, useState } from "react";
+import React, { ChangeEvent, useState, useEffect } from "react";
 import { Video } from "./InterfaceVideo";
 import * as videoService from "./VideoService";
 import { toast } from "react-toastify";
-// import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 type InputChange = ChangeEvent<HTMLInputElement | HTMLTextAreaElement>;
 
 const VideoForm = () => {
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
+  const params = useParams();
 
   const [video, setVideo] = useState<Video>({
     title: "",
@@ -21,11 +22,27 @@ const VideoForm = () => {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    await videoService.createVideo(video);
-    toast.success("New video added");
-    setVideo({ title: "", description: "", url: "" });
-    // navigate("/");
+
+    if (!params.id) {
+      await videoService.createVideo(video);
+      toast.success("New video added");
+      setVideo({ title: "", description: "", url: "" });
+    } else {
+      await videoService.updateVideo(params.id, video);
+    }
+
+    navigate("/");
   };
+
+  const getVideo = async (id: string) => {
+    const res = await videoService.getVideo(id);
+    const { title, description, url } = res.data;
+    setVideo({ title, description, url });
+  };
+
+  useEffect(() => {
+    if (params.id) getVideo(params.id);
+  }, []);
 
   return (
     <div className="row">
@@ -65,7 +82,11 @@ const VideoForm = () => {
                   value={video.description}
                 ></textarea>
               </div>
-              <button className="btn btn-primary">Create Video</button>
+              {params.id ? (
+                <button className="btn btn-info">Update Video</button>
+              ) : (
+                <button className="btn btn-primary">Create Video</button>
+              )}
             </form>
           </div>
         </div>

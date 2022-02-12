@@ -1,0 +1,8 @@
+.video-card:hover {
+  border: 1px solid #333;
+}
+
+.video-x:hover {
+  transform: scale(1.2);
+  font-weight: bold;
+}
