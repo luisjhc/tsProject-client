@@ -26,13 +26,18 @@ const VideoList = () => {
   }, []);
 
   return (
-    <div className="row">
-      {videos.map((video) => {
-        return (
-          <VideoItem video={video} key={video._id} loadVideos={loadVideos} />
-        );
-      })}
-    </div>
+    <>
+      <h4 className="text-center mb-4">
+        CLICK THE TITLE TO UPDATE THE VIDEO OR 'X' TO DELETE
+      </h4>
+      <div className="row">
+        {videos.map((video) => {
+          return (
+            <VideoItem video={video} key={video._id} loadVideos={loadVideos} />
+          );
+        })}
+      </div>
+    </>
   );
 };
 
