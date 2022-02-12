@@ -34,7 +34,12 @@ const VideoItem = ({ video, loadVideos }: Props) => {
         </div>
         <p>{video.description}</p>
         <div className="embed-responsive embed-responsive-16by9">
-          <ReactPlayer width="100%" height="100%" url={video.url} />
+          <ReactPlayer
+            width="100%"
+            height="100%"
+            controls={true}
+            url={video.url}
+          />
         </div>
       </div>
     </div>
