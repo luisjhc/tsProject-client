@@ -1,7 +1,7 @@
 import axios from "axios";
 import { Video } from "./InterfaceVideo";
 
-const API = "http://localhost:5000";
+const API = process.env.SERVER || "http://localhost:5000";
 
 export const getAllVideos = async () => {
   return await axios.get<Video[]>(`${API}/videos`);
